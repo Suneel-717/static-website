@@ -20,7 +20,8 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: 🆔 Show Version Info
-        run: echo "Deploying commit: $GITHUB_SHA"
+        run: | 
+          echo "Deploying commit: $GITHUB_SHA"
 
       - name: 🚀 Deploy to S3 (Public Root)
         run: |
