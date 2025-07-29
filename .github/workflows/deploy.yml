@@ -1,18 +1,3 @@
-
----
-
-## 🔄 CI/CD Workflow
-
-### Trigger:
-- Every push to `main` branch
-
-### Actions:
-1. Checkout code
-2. Configure AWS credentials
-3. Sync files to S3 bucket
-
-```yaml
-# File: .github/workflows/deploy.yml
 name: Deploy Static Website to S3
 
 on:
@@ -22,6 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
