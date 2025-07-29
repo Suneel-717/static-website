@@ -1,0 +1,26 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Node modules (if added for optional tools or builds)
+node_modules/
+
+# Optional: ignore build output
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+
+# AWS credentials (important for safety if used locally)
+.aws/
+
+# GitHub Actions cache
+.github/workflows/*.bak
+
+# Ignore zip files or local backups
+*.zip
+*.tar.gz
+*.bak
