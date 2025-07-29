@@ -26,7 +26,7 @@ jobs:
       - name: 🚀 Deploy to S3 (Public Root)
         run: |
           echo "⚡️ Syncing files to root of bucket..."
-          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --delete --exact-timestamps --verbose
+          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --delete --exact-timestamps
 
       - name: 💾 Backup to versioned folder
         run: |
