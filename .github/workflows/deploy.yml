@@ -9,16 +9,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: 🔄 Checkout Code
         uses: actions/checkout@v3
 
-      - name: Configure AWS Credentials
+      - name: 🔐 Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Deploy to S3
+      - name: 🆔 Show Version Info
+        run: echo "Deploying commit: $GITHUB_SHA"
+
+      - name: 🚀 Deploy to S3 (Public Root)
         run: |
-          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --delete
+          echo "⚡️ Syncing files to root of bucket..."
+          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --delete --exact-timestamps --verbose
+
+      - name: 💾 Backup to versioned folder
+        run: |
+          echo "📁 Backing up to /releases/${{ github.run_number }}/"
+          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }}/releases/${{ github.run_number }}/ --exact-timestamps
+
+      - name: ✅ Notify on Success
+        if: success()
+        run: echo "✅ Deployment Succeeded for commit: $GITHUB_SHA"
+
+      - name: ❌ Notify on Failure
+        if: failure()
+        run: echo "❌ Deployment Failed for commit: $GITHUB_SHA"
